@@ -29,6 +29,8 @@ document.getElementById('bookingForm').addEventListener('submit', function(event
             clearInterval(countdownInterval);
             document.getElementById(`countdown-${sessionNumber}`).innerHTML = "انتهى الوقت!";
             alert(`${sessionName} انتهى وقتهم.`);
+            const audio = new Audio('buzzer.mp3');
+            audio.play();
             if ('speechSynthesis' in window) {
                 const message = `جلسة ${sessionNumber} انتهى وقتهم`;
                 const utterance = new SpeechSynthesisUtterance(message);
@@ -36,6 +38,9 @@ document.getElementById('bookingForm').addEventListener('submit', function(event
             } else {
                 alert("خاصية النطق غير مدعومة في هذا المتصفح.");
             }
+            setTimeout(() => {
+                document.getElementById('notifications').removeChild(sessionElement);
+            }, 60000); // إزالة العنصر بعد دقيقة واحدة
         }
     }
 
